@@ -9,8 +9,8 @@ class Media {
         std::string name;
         std::string path;
     public :
-        Media(std::string name, std::string path) : name(name), path(path) {}
         Media() {}
+        Media(std::string name, std::string path) : name(name), path(path) {}
 
         ~Media() {}
 
@@ -20,7 +20,8 @@ class Media {
         void setPath(std::string path) { this-> path = path; }
         std::string getPath() const { return path; }
 
-        void print(std::ostream& stream) const ;
+        virtual void print(std::ostream& stream) const;
+        virtual void open() const {}
 };
 
 
