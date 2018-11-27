@@ -2,7 +2,7 @@
 #define MEDIA_H
 
 #include <string>
-
+#include <iostream>
 
 class Media {
     private :
