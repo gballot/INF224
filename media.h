@@ -21,7 +21,7 @@ class Media {
         std::string getPath() const { return path; }
 
         virtual void print(std::ostream& stream) const;
-        virtual void open() const {}
+        virtual void open() const = 0;
 };
 
 
