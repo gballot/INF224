@@ -12,10 +12,16 @@ using namespace std;
 
 int main(/*int argc, const char* argv[]*/)
 {
-    Photo * photo = new Photo("photo", "photo1.jpeg", 12, 13);
-    photo->print(cout);
-    photo->open();
-    Video * video = new Video("video", "video1.mov", 2.4);
-    video->open();
+    Media * tab[20];
+    for(int i = 0 ; i < 10 ; i++) {
+        Photo * photo = new Photo("photo", "photo.jpeg", 12, 13);
+        Video * video = new Video("video", "video.mov", 2.4);
+        tab[2*i] = photo;
+        tab[2*i + 1] = video;
+    }
+    for(int i = 0; i < 20 ; i++) {
+        tab[i]->print(cout);
+        cout << '\n';
+    }
     return 0;
 }
