@@ -31,3 +31,6 @@
 *.out
 *.app
 main
+
+# autre
+depend-main
