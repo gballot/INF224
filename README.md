@@ -39,5 +39,9 @@ essaie d'avoir une instance, alors sa vtable n'est pas complète...
 
 Le **polymorphisme** permet de traiter de la même manière tous les objets de la classe
 Media, qu'ils soient photo ou vidéo.  
+En C++ il faut faire `delete` explicitement contrairement à Java pour liberer l'espace mémoire.
 Le tableau continent des pointeurs vers les objets, comme c'est souvent le cas en 
-C++. On ne connait pas la taille des objets de type Media car elle 
+C++. On ne connait pas la taille des objets de type Media car c'est une classe abstraite, il
+faut donc mettre des pointeurs dans le tableau.
+En java, on ne manipule que des pointeurs vers les objets, tandis qu'en C++ on a le choix de
+manipuler des objet ou des pointeurs.

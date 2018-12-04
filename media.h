@@ -12,7 +12,7 @@ class Media {
         Media() {}
         Media(std::string name, std::string path) : name(name), path(path) {}
 
-        ~Media() {}
+        virtual ~Media() {}
 
         void setName(std::string name) { this->name = name; }
         std::string getName() const { return name; }

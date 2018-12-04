@@ -7,6 +7,7 @@
 #include "media.h"
 #include "photo.h"
 #include "video.h"
+#include "film.h"
 
 using namespace std;
 
@@ -14,8 +15,8 @@ int main(/*int argc, const char* argv[]*/)
 {
     Media * tab[20];
     for(int i = 0 ; i < 10 ; i++) {
-        Photo * photo = new Photo("photo", "photo.jpeg", 12, 13);
-        Video * video = new Video("video", "video.mov", 2.4);
+        Photo * photo = new Photo("photo", "photo.jpeg", 12.3, 1.3);
+        Video * video = new Video("video", "video.mov", 24);
         tab[2*i] = photo;
         tab[2*i + 1] = video;
     }
@@ -23,5 +24,13 @@ int main(/*int argc, const char* argv[]*/)
         tab[i]->print(cout);
         cout << '\n';
     }
+    for(int i = 0; i < 20 ; i++) {
+        delete tab[i];
+    }
+
+    int chap[3] = {6, 8, 14};
+    Film *film = new Film("film", "film.mov", 3, chap); 
+    film->print(cout);
+
     return 0;
 }
