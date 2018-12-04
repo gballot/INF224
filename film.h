@@ -22,8 +22,14 @@ class Film : public Video {
                 create_tab(nb_chap, tab);
             }
 
+        ~Film() { delete chapters; }
+
         void setChapters(int nb_chap, int *tab);
-        int getChapters(int *tab, int size);
+        int getChapters(int *tab, int size) const;
+        int getNbChapter() const {
+            return nb_chapters;
+        }
+        void print(std::ostream& stream) const override ;
 };
 
 #endif

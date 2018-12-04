@@ -31,6 +31,11 @@ int main(/*int argc, const char* argv[]*/)
     int chap[3] = {6, 8, 14};
     Film *film = new Film("film", "film.mov", 3, chap); 
     film->print(cout);
+    int chap2[4] = {1, 1, 2, 1};
+    film->setChapters(4, chap2);
+    cout << endl;
+    film->print(cout);
+    delete film;
 
     return 0;
 }
