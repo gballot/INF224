@@ -55,7 +55,7 @@ manipuler des objet ou des pointeurs.
 > détruit) à son insu ? (c'est l'objet qui doit pouvoir modifier ce qui
 > lui appartient, pas les autres !)
 
-Pour que le film garde contrôle sur son tableau il faut qu'il le recopie
+Pour que le film garde contrôle sur son tableau il faut qu'il le **recopie**.
 
 > Attention, le même problème se pose si un accesseur retourne directement ce
 > tableau sans prendre les précautions nécessaires : la encore le contenu du tableau
@@ -65,3 +65,33 @@ Pour que le film garde contrôle sur son tableau il faut qu'il le recopie
 Pour éviter ce problème, c'est l'appelant qui créée le tableau d'une longeur
 maximale fixée et qui le donne en arguement à la fonction `getChapters` ainsi
 que cette taille maximale.
+
+
+## Destruction et copie des objets
+
+> Contrairement à Java ou C#, C/C++ ne gère pas la mémoire dynamique
+> automatiquement (\*) : comme il n'y a pas de ramasse miettes, tout
+> ce qui a été créé avec new doit être détruit avec delete sinon on aura
+> des fuites mémoires. Parmi les classes précédemment écrites quelles sont
+> celles qu'il faut modifier afin qu'il n'y ait pas de fuite mémoire quand
+> on détruit leurs instances ?
+
+Il faut que les classes qui créent des objets pour leur attributs les détruisent
+dans leur destructeur. C'est le cas de la classe `Film`. Elle doit détruire
+son tableau `chapters`:
+
+    ~Film() { delete chapters; }
+
+> De même, la copie d'objets peut poser problème dans certains cas.
+> Pourquoi et que faudrait-il faire ?
+
+La copie d'objet peut être **profonde** ou **superficielle**.  
+Une copie superficielle copie l'objet **champ-à-champs**. Ainsi,
+si l'objet comporte un pointeur, sa copie pointera au même endroit.
+Ce qui peut poser problème.  
+Une copie profonde suit les pointeurs de manière **récursive** et
+recopie les objets pointés.  
+Pour éviter les problèmes de copie superficielle, on peut redéfinir
+le **copy constructor** et l'**operator=**. Ce sont des méthodes
+qui permettent la copie profonde si on indique bien qu'il faut suivre
+les pointeurs.

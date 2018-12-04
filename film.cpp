@@ -42,3 +42,36 @@ void Film::print(ostream& stream) const {
             << endl;
     }
 }
+
+Film::Film(const Film& from) : Video(from) {
+    nb_chapters = from.getNbChapter();
+    int tab[nb_chapters];
+    from.getChapters(tab, nb_chapters);
+    if(nb_chapters)
+        create_tab(nb_chapters, tab);
+    else
+        chapters = nullptr;
+}
+
+Film& Film::operator=(const Film& from) {
+    Video::operator=(from);
+    nb_chapters = from.getNbChapter();
+    int tab[nb_chapters];
+    from.getChapters(tab, nb_chapters);
+    delete chapters;
+    if(nb_chapters)
+        create_tab(nb_chapters, tab);
+    else
+        chapters = nullptr;
+    return *this;
+}
+
+void Film::deepCopy(const Film&from) {
+    nb_chapters = from.getNbChapter();
+    int tab[nb_chapters];
+    from.getChapters(tab, nb_chapters);
+    if(nb_chapters)
+        create_tab(nb_chapters, tab);
+    else
+        chapters = nullptr;
+}

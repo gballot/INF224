@@ -21,6 +21,9 @@ class Film : public Video {
             Video(name, path, sum_chapter_length(nb_chap, tab)), nb_chapters(nb_chap) {
                 create_tab(nb_chap, tab);
             }
+        Film(const Film& from) : Video(from) {};
+
+        Film& operator=(const Film& from);
 
         ~Film() { delete chapters; }
 
