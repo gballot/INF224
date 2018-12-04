@@ -9,9 +9,10 @@ void Film::create_tab(int length, int *tab) {
         chapters[i] = tab[i];
     }
     nb_chapters = length;
+    setLength(sum_chapter_length(nb_chapters, tab));
 }
 
-int Film::sum_chapter_length(int nb_chapters, int *tab) {
+int Film::sum_chapter_length(int nb_chapters, int *tab) const {
     int count = 0;
     for(int i = 0 ; i < nb_chapters ; i++) {
         count += tab[i];
@@ -20,7 +21,7 @@ int Film::sum_chapter_length(int nb_chapters, int *tab) {
 }
 
 void Film::setChapters(int nb_chap, int *tab) {
-    delete chapters;
+    delete [] chapters;
     create_tab(nb_chap, tab);
 }
 
@@ -43,35 +44,18 @@ void Film::print(ostream& stream) const {
     }
 }
 
-Film::Film(const Film& from) : Video(from) {
-    nb_chapters = from.getNbChapter();
-    int tab[nb_chapters];
-    from.getChapters(tab, nb_chapters);
-    if(nb_chapters)
-        create_tab(nb_chapters, tab);
-    else
-        chapters = nullptr;
-}
-
 Film& Film::operator=(const Film& from) {
-    Video::operator=(from);
-    nb_chapters = from.getNbChapter();
-    int tab[nb_chapters];
-    from.getChapters(tab, nb_chapters);
-    delete chapters;
-    if(nb_chapters)
-        create_tab(nb_chapters, tab);
-    else
-        chapters = nullptr;
+    delete [] chapters;
+    this->deepCopy(from); 
     return *this;
 }
 
 void Film::deepCopy(const Film&from) {
-    nb_chapters = from.getNbChapter();
+    this->nb_chapters = from.getNbChapter();
     int tab[nb_chapters];
     from.getChapters(tab, nb_chapters);
     if(nb_chapters)
-        create_tab(nb_chapters, tab);
+        this->create_tab(nb_chapters, tab);
     else
-        chapters = nullptr;
+        this->chapters = nullptr;
 }

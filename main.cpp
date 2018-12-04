@@ -31,11 +31,20 @@ int main(/*int argc, const char* argv[]*/)
     int chap[3] = {6, 8, 14};
     Film *film = new Film("film", "film.mov", 3, chap); 
     film->print(cout);
+    Film film2(*film);
+    film2.setName("film2");
     int chap2[4] = {1, 1, 2, 1};
     film->setChapters(4, chap2);
     cout << endl;
     film->print(cout);
+    cout << endl;
+    film2.print(cout);
     delete film;
+    int chap3[5] = {2, 6, 7, 6, 19};
+    film2.setChapters(5, chap3);
+    film2.print(cout);
+    cout << "precceding to delete\n";
+    delete &film2;
 
     return 0;
 }
