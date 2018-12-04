@@ -45,3 +45,23 @@ C++. On ne connait pas la taille des objets de type Media car c'est une classe a
 faut donc mettre des pointeurs dans le tableau.
 En java, on ne manipule que des pointeurs vers les objets, tandis qu'en C++ on a le choix de
 manipuler des objet ou des pointeurs.
+
+
+## Films et tableaux
+
+
+> Que faut-il faire pour que l'objet Film ait plein contrôle sur ses données
+> et que son tableau de durées des chapitres ne puisse pas être modifié (ou pire,
+> détruit) à son insu ? (c'est l'objet qui doit pouvoir modifier ce qui
+> lui appartient, pas les autres !)
+
+Pour que le film garde contrôle sur son tableau il faut qu'il le recopie
+
+> Attention, le même problème se pose si un accesseur retourne directement ce
+> tableau sans prendre les précautions nécessaires : la encore le contenu du tableau
+> n'est pas récopié et l'appelant peut le modifier à sa guise. Quelle est la
+> solution très simple que propose C/C++ pour éviter ce problème ?
+
+Pour éviter ce problème, c'est l'appelant qui créée le tableau d'une longeur
+maximale fixée et qui le donne en arguement à la fonction `getChapters` ainsi
+que cette taille maximale.
