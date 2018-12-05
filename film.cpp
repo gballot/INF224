@@ -45,12 +45,14 @@ void Film::print(ostream& stream) const {
 }
 
 Film& Film::operator=(const Film& from) {
-    delete [] chapters;
+    Video::operator=(from);
+    if(chapters)
+        delete [] chapters;
     this->deepCopy(from); 
     return *this;
 }
 
-void Film::deepCopy(const Film&from) {
+void Film::deepCopy(const Film& from) {
     this->nb_chapters = from.getNbChapter();
     int tab[nb_chapters];
     from.getChapters(tab, nb_chapters);

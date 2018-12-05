@@ -6,7 +6,7 @@
 class Film : public Video {
     private :
         int nb_chapters = 0;
-        int * chapters;
+        int *chapters;
         int sum_chapter_length(int nb_chapters, int *tab) const;
         void create_tab(int length, int *tab);
         void deepCopy(const Film&from);
@@ -28,8 +28,9 @@ class Film : public Video {
 
         Film& operator=(const Film& from);
 
-        ~Film() { delete [] chapters; }
+        ~Film() { delete [] this->chapters; }
 
+        void setLength(int length) override { if(length) return; }
         void setChapters(int nb_chap, int *tab);
         int getChapters(int *tab, int size) const;
         int getNbChapter() const {
