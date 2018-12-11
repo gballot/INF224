@@ -8,6 +8,7 @@
 #include "photo.h"
 #include "video.h"
 #include "film.h"
+#include "group.h"
 
 using namespace std;
 
@@ -66,15 +67,36 @@ int main(/*int argc, const char* argv[]*/)
     cout << endl;
     film3->print(cout);
 
-    /* deletes film and film3 */
-    delete film;
-    delete film3;
 
     /* changes chapters of film2 and prints it */
     int chap3[5] = {2, 6, 7, 6, 19};
     film2.setChapters(5, chap3);
     cout << "\nNow we changed the chapters of film2 :\n\n";
     film2.print(cout);
+
+
+    /* creates a list */
+    Group * group = new Group("groupe");
+    cout << "\n\n************************************\n"
+        << "Now we create a Group :\n"
+        << "name of the group : "
+        << group->getName()
+        << endl;
+
+    /* fills the group */
+    group->push_back(film);
+    group->push_back(film3);
+
+    /* prints all the group */
+    cout << "\nlet's print the two films added in the group : \n";
+    group->printAll(cout);
+
+    /* deletes film and film3 */
+    delete film;
+    delete film3;
+
+    /* delets the group */
+    delete group;
 
     return 0;
 }

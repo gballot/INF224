@@ -95,3 +95,17 @@ Pour éviter les problèmes de copie superficielle, on peut redéfinir
 le **copy constructor** et l'**operator=**. Ce sont des méthodes
 qui permettent la copie profonde si on indique bien qu'il faut suivre
 les pointeurs.
+
+
+## Créer des groupes
+
+> On rappelle aussi que la liste d'objets doit en fait être une liste
+> de pointeurs d'objets. Pourquoi ? Comparer à Java.
+
+Il faut que les éléments du groupe soient de même taille. Or ici,
+si les éléments étaient du type `Media`, ils n'auraient pas tous
+la même taille. C'est pour cela que l'on fait une liste de pointeurs
+qui ont tous la taille d'une adresse mémoire.  
+En Java, ce problème ne se pose pas étant donné qu'on ne peut pas faire
+une liste qui contienne les objets eux même (on fait automatiquement
+une liste de pointeurs).
