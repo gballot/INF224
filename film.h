@@ -11,7 +11,7 @@ class Film : public Video {
         void create_tab(int length, int *tab);
         void deepCopy(const Film&from);
     public :
-        Film() {};
+        Film() {}
         Film(std::string name, std::string path, int length) :
             Video(name, path, length) {}
         Film(std::string name, std::string path, int length, int nb_chapters, int * tab) :

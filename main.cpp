@@ -9,6 +9,7 @@
 #include "video.h"
 #include "film.h"
 #include "group.h"
+#include "dataBase.h"
 
 using namespace std;
 
@@ -129,12 +130,43 @@ int main(/*int argc, const char* argv[]*/)
     group2->pop_front();
     cout << "...\ndone\n";
     cout << "the film should have been automatically destroyed\n"
-        << "check if 'delete media : film' has been printed\n"
-        << "\n**************************************\n";
+        << "check if 'delete media : film' has been printed\n";
 
-    /* delets the group */
+    /* delets the group2 */
     delete group;
     delete group2;
+
+    /* creates a data base */
+    cout << "\n\n**********************************\n"
+        << "create a data base and add a photo, film and video\n";
+    DataBase *db = new DataBase();
+    PhotoPtr photo_db = db->createPhoto("photo-db", "photo-db.jpeg", 3.2, 8.9);
+    VideoPtr video_db = db->createVideo("video-db", "video-db.mov", 67);
+    FilmPtr film_db = db->createFilm("film-db", "film-db.mov", 3, chap);
+    GroupPtr group_db = db->createGroup("group-db");
+    group_db->push_back(photo_db);
+    group_db->push_back(film_db);
+    group_db->push_back(video_db);
+
+    /* prints the content of the data base */
+    cout << "now we print the film, video and photo added to the data base :\n\n";
+    db->printMedia("photo-db");
+    cout << "\n";
+    db->printMedia("video-db");
+    cout << "\n";
+    db->printMedia("film-db");
+    cout << "\n";
+    cout << "let's see what append if we try to print film-unknown :\n";
+    db->printMedia("film-unknown");
+    cout << "nothing hoppfully...\n";
+
+    /* print the group named group_db */
+    cout << "\n\n*********************************\n"
+        << "now we ask to print the group named group-unknown :\n";
+    db->printGroup("group-unknown");
+    cout << "/!\\ nothing must happen becouse group-unknown does'nt exist /!\\\n"
+        << "we ask to print group-db, this one exists !\n";
+    db->printGroup("group-db");
 
     return 0;
 }

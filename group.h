@@ -15,4 +15,6 @@ class Group : public std::list<MediaPtr> {
         void printAll(std::ostream& stream) const;
 };
 
+typedef std::shared_ptr<Group> GroupPtr;
+
 #endif
