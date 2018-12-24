@@ -34,6 +34,9 @@ class DataBase {
         void printGroup(std::string name);
 
         void openMedia(std::string name);
+
+        void deleteMedia(std::string name);
+        void deleteGroup(std::string name);
 };
 
 #endif

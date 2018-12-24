@@ -168,5 +168,14 @@ int main(/*int argc, const char* argv[]*/)
         << "we ask to print group-db, this one exists !\n";
     db->printGroup("group-db");
 
+    /* remove a media from the data base */
+    cout << "\n\n*************************\n"
+        << "remove a media from the data base we will see if\n"
+        << "it is removed from the group-db as expected...\n";
+    db->deleteMedia("photo-db");
+    cout << "photo-db deleted\n"
+        << "print group-db again :\n";
+    db->printGroup("group-db");
+
     return 0;
 }

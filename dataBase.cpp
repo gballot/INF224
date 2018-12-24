@@ -82,3 +82,21 @@ void DataBase::openMedia(string name) {
         get<1>(*it)->open();
     }
 }
+
+void DataBase::deleteMedia(string name) {
+    map<string, MediaPtr>::iterator it = mediaMap.find(name);
+    if(it != mediaMap.end()) {
+        for(map<string, GroupPtr>::iterator groupIt = groupMap.begin() ;
+                groupIt != groupMap.end() ; groupIt++) {
+            groupIt->second->remove(it->second);
+        }
+        mediaMap.erase(it);
+    }
+}
+
+void DataBase::deleteGroup(string name) {
+    map<string, GroupPtr>::iterator it = groupMap.find(name);
+    if(it != groupMap.end()) {
+        groupMap.erase(it);
+    }
+}
