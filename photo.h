@@ -21,4 +21,6 @@ class Photo : public Media {
         void open() const override;
 };
 
+typedef std::shared_ptr<Photo> PhotoPtr;
+
 #endif

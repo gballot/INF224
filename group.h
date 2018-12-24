@@ -4,12 +4,12 @@
 #include <list>
 #include "media.h"
 
-class Group : public std::list<Media *> {
+class Group : public std::list<MediaPtr> {
     private :
         std::string name;
     public :
-        Group() : list<Media *>() {}
-        Group(std::string name) : list<Media *>(), name(name) {}
+        Group() : list<MediaPtr>() {}
+        Group(std::string name) : list<MediaPtr>(), name(name) {}
         
         std::string getName() const { return this->name; }
         void printAll(std::ostream& stream) const;

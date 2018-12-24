@@ -39,4 +39,6 @@ class Film : public Video {
         void print(std::ostream& stream) const override ;
 };
 
+typedef std::shared_ptr<Film> FilmPtr;
+
 #endif

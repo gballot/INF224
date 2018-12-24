@@ -37,7 +37,7 @@ int main(/*int argc, const char* argv[]*/)
 
     /* a first film */
     int chap[3] = {6, 8, 14};
-    Film *film = new Film("film", "film.mov", 3, chap); 
+    FilmPtr film(new Film("film", "film.mov", 3, chap)); 
     cout << "\n\n************************************\n"
         << "Now we create a Film and we will make 2 deep copies :\n";
     film->print(cout);
@@ -46,7 +46,7 @@ int main(/*int argc, const char* argv[]*/)
     Film film2(*film);
 
     /* a third film (deep copy) */
-    Film *film3 = new Film();
+    FilmPtr film3(new Film());
     *film3 = *film;
 
     /* renaming film 2 and 3 */
@@ -84,8 +84,8 @@ int main(/*int argc, const char* argv[]*/)
         << endl;
 
     /* fills the group */
-    Photo * photo1 = new Photo("photo1", "images/photo1.jpeg", 27.6, 378.7);
-    Video * video1 = new Video("video1", "videos/video1.mp4", 78);
+    PhotoPtr photo1(new Photo("photo1", "images/photo1.jpeg", 27.6, 378.7));
+    VideoPtr video1(new Video("video1", "videos/video1.mp4", 78));
     group->push_back(film);
     group->push_back(photo1);
     group->push_back(film3);
@@ -106,9 +106,9 @@ int main(/*int argc, const char* argv[]*/)
         << endl;
 
     /* fills the group */
+    group2->push_back(film);
     group2->push_back(video1);
     group2->push_back(photo1);
-    group2->push_back(film);
     group2->push_back(film3);
 
     /* prints all the group */
@@ -116,13 +116,23 @@ int main(/*int argc, const char* argv[]*/)
         << "and the photo added in the group : \n";
     group2->printAll(cout);
 
-    /* deletes film and film3 */
-    delete film;
-    delete film3;
+    /* remove film from the two groups and check that it is automatically deleted */
+    cout << "\n\n************************************\n"
+        << "remove film from the two groups and check that it is automatically deleted\n"
+        << "first delete `film` from main\n";
+    film.reset();
+    cout << "...\ndone\n";
+    cout << "now delete film from group\n";
+    group->pop_front();
+    cout << "...\ndone\n";
+    cout << "now delete film from group2\n";
+    group2->pop_front();
+    cout << "...\ndone\n";
+    cout << "the film should have been automatically destroyed\n"
+        << "check if 'delete media : film' has been printed\n"
+        << "\n**************************************\n";
 
     /* delets the group */
-    delete photo1;
-    delete video1;
     delete group;
     delete group2;
 

@@ -17,4 +17,6 @@ class Video : public Media {
         void open() const override;
 };
 
+typedef std::shared_ptr<Video> VideoPtr;
+
 #endif

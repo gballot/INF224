@@ -12,7 +12,11 @@ class Media {
         Media() {}
         Media(std::string name, std::string path) : name(name), path(path) {}
 
-        virtual ~Media() {}
+        virtual ~Media() {
+            std::cout << "delete media : "
+                << this->name
+                << std::endl;
+        }
 
         void setName(std::string name) { this->name = name; }
         std::string getName() const { return name; }
@@ -23,6 +27,8 @@ class Media {
         virtual void print(std::ostream& stream) const;
         virtual void open() const = 0;
 };
+
+typedef std::shared_ptr<Media> MediaPtr;
 
 
 #endif
