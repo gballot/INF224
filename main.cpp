@@ -75,28 +75,56 @@ int main(/*int argc, const char* argv[]*/)
     film2.print(cout);
 
 
-    /* creates a list */
+    /* creates a group */
     Group * group = new Group("groupe");
     cout << "\n\n************************************\n"
-        << "Now we create a Group :\n"
+        << "now we create a group :\n"
         << "name of the group : "
         << group->getName()
         << endl;
 
     /* fills the group */
+    Photo * photo1 = new Photo("photo1", "images/photo1.jpeg", 27.6, 378.7);
+    Video * video1 = new Video("video1", "videos/video1.mp4", 78);
     group->push_back(film);
+    group->push_back(photo1);
     group->push_back(film3);
+    group->push_back(video1);
 
     /* prints all the group */
-    cout << "\nlet's print the two films added in the group : \n";
+    cout << "\nlet's print the two films the video "
+        << "and the photo added in the group : \n";
     group->printAll(cout);
+
+
+    /* creates a second group list */
+    Group * group2 = new Group("groupe2");
+    cout << "\n\n************************************\n"
+        << "now we create a second group :\n"
+        << "name of the group : "
+        << group2->getName()
+        << endl;
+
+    /* fills the group */
+    group2->push_back(video1);
+    group2->push_back(photo1);
+    group2->push_back(film);
+    group2->push_back(film3);
+
+    /* prints all the group */
+    cout << "\nlet's print the two films the video "
+        << "and the photo added in the group : \n";
+    group2->printAll(cout);
 
     /* deletes film and film3 */
     delete film;
     delete film3;
 
     /* delets the group */
+    delete photo1;
+    delete video1;
     delete group;
+    delete group2;
 
     return 0;
 }
