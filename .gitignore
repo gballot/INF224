@@ -31,6 +31,11 @@
 *.out
 *.app
 main
+client
+server
 
 # autre
 depend-main
+depend-client
+depend-server
+.DS_Store

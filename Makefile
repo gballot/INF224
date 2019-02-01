@@ -54,6 +54,9 @@ LDLIBS =
  
 all: ${PROG}
 
+cli:
+	make -f Makefile-cliserv
+
 run: ${PROG}
 	./${PROG}
 

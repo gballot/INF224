@@ -1,8 +1,3 @@
-//
-// main.cpp
-// Created on 21/10/2018
-//
-
 #include <iostream>
 #include "media.h"
 #include "photo.h"
