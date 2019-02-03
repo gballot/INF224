@@ -14,7 +14,7 @@ PROG = main
 #
 # Fichiers sources (NE PAS METTRE les .h ni les .o seulement les .cpp)
 #
-SOURCES = media.cpp main.cpp video.cpp photo.cpp film.cpp group.cpp dataBase.cpp
+SOURCES = media.cpp main.cpp video.cpp photo.cpp film.cpp group.cpp dataBase.cpp cppsocket.cpp tcpserver.cpp
 
 #
 # Fichiers objets (ne pas modifier sauf si l'extension n'est pas .cpp)
@@ -32,7 +32,7 @@ CXX = c++
 #   -std=c++11 pour C++11
 # Exemple: CXXFLAGS= -std=c++11 -Wall -O -I/usr/local/qt/include
 #
-CXXFLAGS = -std=c++11 -Wall -Wextra -Werror -g
+CXXFLAGS = -std=c++11 -Wall -Wextra -g -DSERVER
 
 #
 # Options de l'editeur de liens
@@ -43,7 +43,7 @@ LDFLAGS =
 # Librairies a utiliser
 # Exemple: LDLIBS = -L/usr/local/qt/lib -lqt
 #
-LDLIBS = 
+LDLIBS = -lpthread
 
 
 ##########################################

@@ -1,6 +1,7 @@
 #include "dataBase.h"
 
 using namespace std;
+using namespace cppu;
 
 PhotoPtr DataBase::createPhoto() {
     PhotoPtr photo(new Photo());
@@ -99,4 +100,49 @@ void DataBase::deleteGroup(string name) {
     if(it != groupMap.end()) {
         groupMap.erase(it);
     }
+}
+
+bool DataBase::processRequest(TCPConnection& cnx, const string& request, string& response) {
+    stringstream requestStream;
+    requestStream.str(request);
+    string requestType;
+    requestStream >> requestType;
+    if(!requestType.compare("create")) {
+        createRequest(&requestStream, response);
+    } else {
+        cout << requestType;
+
+        cout << request;
+        cout<< endl;
+        response = "done";
+        TCPLock lock(cnx);
+    }
+
+    return true;//false;
+}
+
+void DataBase::createRequest(stringstream *stream, string& response) {
+    string group_or_media;
+    *stream >> group_or_media;
+    string name;
+    *stream >> name;
+    if(!group_or_media.compare("group")) {
+        if(name.compare(""))
+            createGroup(name);
+        else
+            createGroup();
+    } else {
+        string path;
+        *stream >> path;
+        if(group_or_media.compare("photo")) {
+            string latitude, longitude;
+            *stream >> latitude;
+            *stream >> longitude;
+            if(name.compare("") && path.compare("") && latitude.compare("") && longitude.compare(""))
+                createPhoto(name, path, stoi(latitude), stoi(longitude));
+            else
+                createPhoto();
+        }
+    }
+    response = "done";
 }

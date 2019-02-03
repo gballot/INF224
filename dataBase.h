@@ -3,16 +3,20 @@
 
 #include <string>
 #include <map>
+#include <sstream>
 #include "media.h"
 #include "photo.h"
 #include "video.h"
 #include "film.h"
 #include "group.h"
+#include "tcpserver.h"
 
 class DataBase {
     private :
         std::map<std::string, MediaPtr> mediaMap;
         std::map<std::string, GroupPtr> groupMap;
+
+        void createRequest(std::stringstream *stream_ptr, std::string& response);
     public :
         DataBase() {}
 
@@ -37,6 +41,9 @@ class DataBase {
 
         void deleteMedia(std::string name);
         void deleteGroup(std::string name);
+
+
+        bool processRequest(cppu::TCPConnection& cnx, const std::string& request, std::string& response);
 };
 
 #endif

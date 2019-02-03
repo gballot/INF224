@@ -1,3 +1,59 @@
+#ifdef SERVER
+
+/****************************************************/
+/* version du code après l'étape 11 -client-server- */
+/****************************************************/
+
+#include <memory>
+#include <string>
+#include <iostream>
+#include <sstream>
+#include "media.h"
+#include "photo.h"
+#include "video.h"
+#include "film.h"
+#include "group.h"
+#include "dataBase.h"
+#include "tcpserver.h"
+
+using namespace std;
+using namespace cppu;
+
+const int PORT = 3331;
+
+
+int main(/*int argc, const char* argv[]*/)
+{
+  // cree le TCPServer
+  shared_ptr<TCPServer> server(new TCPServer());
+  
+  // cree l'objet qui gère les données
+  shared_ptr<DataBase> base(new DataBase());
+
+  // le serveur appelera cette méthode chaque fois qu'il y a une requête
+  server->setCallback(*base, &DataBase::processRequest);
+  
+  // lance la boucle infinie du serveur
+  cout << "Starting Server on port " << PORT << endl;
+  int status = server->run(PORT);
+  
+  // en cas d'erreur
+  if (status < 0) {
+    cerr << "Could not start Server on port " << PORT << endl;
+    return 1;
+  }
+  
+  return 0;
+
+}
+
+
+#else
+
+/****************************************************/
+/* version du code avant l'étape 11 -client-server- */
+/****************************************************/
+
 #include <iostream>
 #include "media.h"
 #include "photo.h"
@@ -5,6 +61,7 @@
 #include "film.h"
 #include "group.h"
 #include "dataBase.h"
+
 
 using namespace std;
 
@@ -174,3 +231,5 @@ int main(/*int argc, const char* argv[]*/)
 
     return 0;
 }
+
+#endif
