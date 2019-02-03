@@ -108,7 +108,7 @@ bool DataBase::processRequest(TCPConnection& cnx, const string& request, string&
     string requestType;
     requestStream >> requestType;
     if(!requestType.compare("create")) {
-        createRequest(&requestStream, response);
+        createRequest(requestStream, response);
     } else {
         cout << requestType;
 
@@ -121,11 +121,11 @@ bool DataBase::processRequest(TCPConnection& cnx, const string& request, string&
     return true;//false;
 }
 
-void DataBase::createRequest(stringstream *stream, string& response) {
+void DataBase::createRequest(stringstream& stream, string& response) {
     string group_or_media;
-    *stream >> group_or_media;
+    stream >> group_or_media;
     string name;
-    *stream >> name;
+    stream >> name;
     if(!group_or_media.compare("group")) {
         if(name.compare(""))
             createGroup(name);
@@ -133,15 +133,46 @@ void DataBase::createRequest(stringstream *stream, string& response) {
             createGroup();
     } else {
         string path;
-        *stream >> path;
-        if(group_or_media.compare("photo")) {
+        stream >> path;
+        if(!group_or_media.compare("photo")) {
             string latitude, longitude;
-            *stream >> latitude;
-            *stream >> longitude;
+            stream >> latitude;
+            stream >> longitude;
             if(name.compare("") && path.compare("") && latitude.compare("") && longitude.compare(""))
                 createPhoto(name, path, stoi(latitude), stoi(longitude));
             else
                 createPhoto();
+        } else if(!group_or_media.compare("video")) {
+            string length;
+            stream >> length;
+            if(name.compare("") && path.compare("") && length.compare(""))
+                createVideo(name, path, stoi(length));
+            else
+                createVideo();
+        } else if(!group_or_media.compare("film")) {
+            string length;
+            if(name.compare("") && path.compare("") && length.compare("")) {
+                string nb_chapters;
+                stream >> nb_chapters;
+                if(nb_chapters.compare("")) {
+                    string last_int;
+                    stream >> last_int;
+                    int nb_chap = stoi(nb_chapters);
+                    int tab[nb_chap];
+                    for(int i = 0 ; i < nb_chap ; i++) {
+                        tab[i] = stoi(last_int);
+                        stream >> last_int;
+                    }
+                    if(length.compare(""))
+                        createFilm(name, path, stoi(length), nb_chap, tab);
+                    else if(!length.compare("null"))
+                        createFilm(name, path, nb_chap, tab);
+                    else response = "fail";
+                    return;
+                } else
+                    createFilm(name, path, stoi(length));
+            } else
+                createFilm();
         }
     }
     response = "done";

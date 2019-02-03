@@ -16,7 +16,7 @@ class DataBase {
         std::map<std::string, MediaPtr> mediaMap;
         std::map<std::string, GroupPtr> groupMap;
 
-        void createRequest(std::stringstream *stream_ptr, std::string& response);
+        void createRequest(std::stringstream& stream, std::string& response);
     public :
         DataBase() {}
 
