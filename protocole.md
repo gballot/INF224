@@ -27,7 +27,7 @@ réponse : "done"
 #### Pour les requettes de type get media
 
 réponse :
-<media type> <name> <path> <info>
+<name> <path> <media type> <info>
 
 où <info> dépend du type de media :
 * photo : <info> = <latitude> <longitude>

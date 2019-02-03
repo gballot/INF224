@@ -34,6 +34,7 @@ FilmPtr DataBase::createFilm() {
 }
 
 FilmPtr DataBase::createFilm(string name, string path, int length) {
+    cout << "***********" << name << endl;
     FilmPtr film(new Film(name, path, length));
     mediaMap.insert(pair<string, MediaPtr>(name, film));
     return film;
@@ -63,17 +64,20 @@ GroupPtr DataBase::createGroup(string name) {
     return group;
 }
 
-void DataBase::printMedia(string name) {
+void DataBase::printMedia(string name, ostream& stream) {
+    cout << "print occure" << endl;
     map<string, MediaPtr>::iterator it = mediaMap.find(name);
     if(it != mediaMap.end()) {
-        get<1>(*it)->print(cout);
-    }
+        cout << name << " found" << endl;
+        get<1>(*it)->print(stream);
+    } else 
+        cout << name << " not found" << endl;
 }
 
-void DataBase::printGroup(string name) {
+void DataBase::printGroup(string name, ostream& stream) {
     map<string, GroupPtr>::iterator it = groupMap.find(name);
     if(it != groupMap.end()) {
-        get<1>(*it)->printAll(cout);
+        get<1>(*it)->printAll(stream);
     }
 }
 
@@ -108,16 +112,15 @@ bool DataBase::processRequest(TCPConnection& cnx, const string& request, string&
     string requestType;
     requestStream >> requestType;
     if(!requestType.compare("create")) {
-        createRequest(requestStream, response);
-    } else {
-        cout << requestType;
-
-        cout << request;
-        cout<< endl;
-        response = "done";
+        cout << "create request" << endl;
         TCPLock lock(cnx);
+        createRequest(requestStream, response);
+    } else if(!requestType.compare("get")) {
+        getRequest(requestStream, response);
+    } else if(!requestType.compare("open")) {
+        cout << "open request" << endl;
+        openRequest(requestStream, response);
     }
-
     return true;//false;
 }
 
@@ -131,6 +134,7 @@ void DataBase::createRequest(stringstream& stream, string& response) {
             createGroup(name);
         else
             createGroup();
+        cout << "group created " << name << endl;
     } else {
         string path;
         stream >> path;
@@ -139,9 +143,10 @@ void DataBase::createRequest(stringstream& stream, string& response) {
             stream >> latitude;
             stream >> longitude;
             if(name.compare("") && path.compare("") && latitude.compare("") && longitude.compare(""))
-                createPhoto(name, path, stoi(latitude), stoi(longitude));
+                createPhoto(name, path, stof(latitude), stof(longitude));
             else
                 createPhoto();
+            cout << "photo created " << name << endl;
         } else if(!group_or_media.compare("video")) {
             string length;
             stream >> length;
@@ -149,8 +154,10 @@ void DataBase::createRequest(stringstream& stream, string& response) {
                 createVideo(name, path, stoi(length));
             else
                 createVideo();
+            cout << "video created " << name << endl;
         } else if(!group_or_media.compare("film")) {
             string length;
+            stream >> length;
             if(name.compare("") && path.compare("") && length.compare("")) {
                 string nb_chapters;
                 stream >> nb_chapters;
@@ -163,17 +170,50 @@ void DataBase::createRequest(stringstream& stream, string& response) {
                         tab[i] = stoi(last_int);
                         stream >> last_int;
                     }
+                    cout << "(h)" << endl;
                     if(length.compare(""))
                         createFilm(name, path, stoi(length), nb_chap, tab);
                     else if(!length.compare("null"))
                         createFilm(name, path, nb_chap, tab);
                     else response = "fail";
                     return;
-                } else
+                } else {
+                    cout << "(name path length)" << endl;
                     createFilm(name, path, stoi(length));
-            } else
+                }
+            } else {
+                cout << "()" << endl;
                 createFilm();
+            }
+            cout << "film created " << name << endl;
         }
     }
     response = "done";
 }
+
+void DataBase::getRequest(stringstream& stream, string& response) {
+    string name;
+    stream >> name;
+    stringstream responseStream;
+    if(!name.compare("group")) {
+        cout << "get group received " << name << endl;
+        printGroup(name, responseStream);
+        cout << responseStream.str();
+    }
+    else {
+        cout << "get media receeived " << name << endl;
+        printMedia(name, responseStream);
+        cout << responseStream.str();
+    }
+    response = responseStream.str();
+}
+
+
+void DataBase::openRequest(stringstream& stream, string& response) {
+    string name;
+    stream >> name;
+    if(name.compare("")) {
+        openMedia(name);
+    }
+}
+

@@ -5,7 +5,7 @@ using namespace std;
 
 void Video::print(std::ostream& stream) const {
     Media::print(stream);
-    stream << "length : " << this->length << endl;
+    stream << this->length << " " << endl;
 }
 
 void Video::open() const {

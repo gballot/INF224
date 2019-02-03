@@ -17,6 +17,8 @@ class DataBase {
         std::map<std::string, GroupPtr> groupMap;
 
         void createRequest(std::stringstream& stream, std::string& response);
+        void getRequest(std::stringstream& stream, std::string& response);
+        void openRequest(std::stringstream& stream, std::string& response);
     public :
         DataBase() {}
 
@@ -34,8 +36,8 @@ class DataBase {
         GroupPtr createGroup();
         GroupPtr createGroup(std::string name);
 
-        void printMedia(std::string name);
-        void printGroup(std::string name);
+        void printMedia(std::string name, std::ostream& stream);
+        void printGroup(std::string name, std::ostream& stream);
 
         void openMedia(std::string name);
 

@@ -5,9 +5,10 @@ using namespace std;
 
 void Photo::print(std::ostream& stream) const {
     Media::print(stream);
-    stream << "latitude : " << this->latitude 
-        << "\nlongitude : " << this->longitude 
-        << endl;
+    stream << this->latitude 
+           << " "
+           << this->longitude 
+           << endl;
 }
 
 void Photo::open() const {

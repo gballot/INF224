@@ -3,7 +3,8 @@
 void Group::printAll(std::ostream& stream) const {
     for(auto & it : *this) {
         it->print(stream);
-        stream << std::endl;
+        stream << " ";
     }
+    stream << std::endl;
 }
 

@@ -3,7 +3,8 @@
 using namespace std;
 
 void Media::print(std::ostream& stream) const {
-    stream << "name : " << this->name 
-        << "\npath : " << this->path 
-        << endl;
+    stream << this->name 
+           << " "
+           << this->path
+           << " ";
 }

@@ -35,13 +35,12 @@ int Film::getChapters(int *tab, int size) const {
 
 void Film::print(ostream& stream) const {
     Video::print(stream);
-    stream << "nb_chapters : " << this->nb_chapters
-        << endl;
+    stream << this->nb_chapters;
     for(int i = 0 ; i < nb_chapters ; i++) {
-        stream << "chapter " << i
-            << "has length : " << this->chapters[i]
-            << endl;
+        stream << " "
+               << this->chapters[i];
     }
+    stream << endl;
 }
 
 Film& Film::operator=(const Film& from) {
