@@ -23,14 +23,14 @@ public class Client
     /// recupere sa reponse et l'affiche sur le Terminal.
     /// Noter que le programme bloque si le serveur ne repond pas.
     ///
-    public static void main(String argv[]) {
+    public static void main(String argv[]) throws UnknownHostException, IOException {
         String host = DEFAULT_HOST;
         int port = DEFAULT_PORT;
         if (argv.length >=1) host = argv[0];
         if (argv.length >=2) port = Integer.parseInt(argv[1]);
 
         Client client = new Client(host, port);
-	MainWindow window = new MainWindow(client);
+        MainWindow window = new MainWindow(client);
         
 
     }
