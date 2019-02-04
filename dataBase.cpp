@@ -76,19 +76,28 @@ void DataBase::addMedia(string group_name, string media_name) {
 }
 
 void DataBase::printMedia(string name, ostream& stream) {
-    cout << "print occure" << endl;
     map<string, MediaPtr>::iterator it = mediaMap.find(name);
     if(it != mediaMap.end()) {
-        cout << name << " found" << endl;
         get<1>(*it)->print(stream);
-    } else 
-        cout << name << " not found" << endl;
+    }
 }
 
 void DataBase::printGroup(string name, ostream& stream) {
     map<string, GroupPtr>::iterator it = groupMap.find(name);
     if(it != groupMap.end()) {
         get<1>(*it)->printAll(stream);
+    }
+}
+
+void DataBase::printAllMedias(ostream& stream) {
+    for(map<string, MediaPtr>::iterator it = mediaMap.begin() ; it == mediaMap.end() ; next(it)) {
+        stream << get<1>(*it)->getName();
+    }
+}
+
+void DataBase::printAllGroups(ostream& stream) {
+    for(map<string, GroupPtr>::iterator it = groupMap.begin()  ; it == groupMap.end() ; next(it)) {
+        stream << get<1>(*it)->getName();
     }
 }
 
@@ -208,9 +217,10 @@ void DataBase::createRequest(stringstream& stream, string& response) {
                 response = "done";
             }
             cout << "film created " << name << endl;
+        } else {
+            response = "fail";
         }
-    } else {
-        response = "fail";
+    }
 }
 
 void DataBase::getRequest(stringstream& stream, string& response) {

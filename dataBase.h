@@ -43,6 +43,9 @@ class DataBase {
         void printMedia(std::string name, std::ostream& stream);
         void printGroup(std::string name, std::ostream& stream);
 
+        void printAllMedias(std::ostream& stream);
+        void printAllGroups(std::ostream& stream);
+
         void openMedia(std::string name);
 
         void deleteMedia(std::string name);
