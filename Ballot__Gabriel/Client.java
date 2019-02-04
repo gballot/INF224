@@ -24,20 +24,20 @@ public class Client
     /// Noter que le programme bloque si le serveur ne repond pas.
     ///
     public static void main(String argv[]) {
-        Client client = null;
         String host = DEFAULT_HOST;
         int port = DEFAULT_PORT;
         if (argv.length >=1) host = argv[0];
         if (argv.length >=2) port = Integer.parseInt(argv[1]);
 
+        Client client = null;
         try {
             client = new Client(host, port);
-            client.window = new MainWindow(client);
         }
         catch (Exception e) {
             System.err.println("Client: Couldn't connect to "+host+":"+port);
             System.exit(1);
         }
+        client.window = new MainWindow(client);
 
         System.out.println("Client connected to "+host+":"+port);
 
