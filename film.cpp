@@ -35,7 +35,7 @@ int Film::getChapters(int *tab, int size) const {
 
 void Film::print(ostream& stream) const {
     Video::print(stream);
-    stream << "film ";
+    stream << " film ";
     stream << this->nb_chapters;
     for(int i = 0 ; i < nb_chapters ; i++) {
         stream << " "

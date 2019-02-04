@@ -41,7 +41,7 @@ où <info> dépend du type de media :
 
 #### Pour les requettes de type get group
 
-réponse : la liste des medias avec la syntaxe de get media séparé par des '\n'.
+réponse : la liste des medias avec la syntaxe de get media séparé par des ','.
 
 #### Pour les requettes de type detete
 
