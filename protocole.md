@@ -5,7 +5,7 @@ On ferme la connection entre chaque requette.
 ### Requettes de client :
 * create photo [<name> <path> <latitude> <longitude>]
 * create video [<name> <path> <length>]
-* create film [<name> <path> [<length> [<nb_chapters> <tab>]]]
+* create film [<name> <path> <length> [<nb_chapters> <tab>]]
 * create film <name> <path> null <nb_chapters> <tab>
 * create group [<name>]
 * get media <name>
@@ -13,9 +13,10 @@ On ferme la connection entre chaque requette.
 * open media <name>
 * delete media <name>
 * delete group <name>
+* add <group_name> <media name>
 
 **Remarque :** <tab>
-<tab> est un tableau d'entier, il s'agit simplement d'une suite d'entier
+<tab> est un tableau d'entier, il s'agit simplement d'une suite d'entiers
 séparés par des espaces
 
 ### Réponses du serveur :
@@ -36,8 +37,12 @@ où <info> dépend du type de media :
 
 #### Pour les requettes de type get group
 
-réponse : la liste des medias avec la syntaxe de get media
+réponse : la liste des medias avec la syntaxe de get media séparé par des '\n'.
 
 #### Pour les requettes de type detete
+
+réponse : "done"
+
+#### Pour les requettes de type add
 
 réponse : "done"

@@ -34,7 +34,6 @@ FilmPtr DataBase::createFilm() {
 }
 
 FilmPtr DataBase::createFilm(string name, string path, int length) {
-    cout << "***********" << name << endl;
     FilmPtr film(new Film(name, path, length));
     mediaMap.insert(pair<string, MediaPtr>(name, film));
     return film;
@@ -62,6 +61,18 @@ GroupPtr DataBase::createGroup(string name) {
     GroupPtr group(new Group(name));
     groupMap.insert(pair<string, GroupPtr>(name, group));
     return group;
+}
+
+void DataBase::addMedia(string group_name, string media_name) {
+    map<string, GroupPtr>::iterator it = groupMap.find(group_name);
+    if(it != groupMap.end()) {
+        GroupPtr group_ptr = get<1>(*it);
+        map<string, MediaPtr>::iterator it = mediaMap.find(media_name);
+        if(it != mediaMap.end()) {
+            MediaPtr media_ptr = get<1>(*it);
+            group_ptr->push_back(media_ptr);
+        }
+    }
 }
 
 void DataBase::printMedia(string name, ostream& stream) {
@@ -120,6 +131,12 @@ bool DataBase::processRequest(TCPConnection& cnx, const string& request, string&
     } else if(!requestType.compare("open")) {
         cout << "open request" << endl;
         openRequest(requestStream, response);
+    } else if(!requestType.compare("delete")) {
+        cout << "delete request" << endl;
+        deleteRequest(requestStream, response);
+    } else if(!requestType.compare("add")) {
+        cout << "add request" << endl;
+        addRequest(requestStream, response);
     }
     return true;//false;
 }
@@ -192,10 +209,11 @@ void DataBase::createRequest(stringstream& stream, string& response) {
 }
 
 void DataBase::getRequest(stringstream& stream, string& response) {
-    string name;
+    string group_or_media, name;
+    stream >> group_or_media;
     stream >> name;
     stringstream responseStream;
-    if(!name.compare("group")) {
+    if(!group_or_media.compare("group")) {
         cout << "get group received " << name << endl;
         printGroup(name, responseStream);
         cout << responseStream.str();
@@ -215,5 +233,30 @@ void DataBase::openRequest(stringstream& stream, string& response) {
     if(name.compare("")) {
         openMedia(name);
     }
+    response = "done";
+}
+
+void DataBase::deleteRequest(stringstream& stream, string& response) {
+    string group_or_media, name;
+    stream >> group_or_media;
+    stream >> name;
+    if(group_or_media.compare("group")) {
+        if(name.compare("")) {
+            deleteMedia(name);
+        }
+    } else {
+        deleteGroup(name);
+    }
+    response = "done";
+}
+
+void DataBase::addRequest(stringstream& stream, string& response) {
+    string group_name, media_name;
+    stream >> group_name;
+    stream >> media_name;
+    if(group_name.compare("") && media_name.compare("")) {
+        addMedia(group_name, media_name);
+    }
+    response = "done";
 }
 

@@ -19,6 +19,8 @@ class DataBase {
         void createRequest(std::stringstream& stream, std::string& response);
         void getRequest(std::stringstream& stream, std::string& response);
         void openRequest(std::stringstream& stream, std::string& response);
+        void deleteRequest(std::stringstream& stream, std::string& response);
+        void addRequest(std::stringstream& stream, std::string& response);
     public :
         DataBase() {}
 
@@ -35,6 +37,8 @@ class DataBase {
 
         GroupPtr createGroup();
         GroupPtr createGroup(std::string name);
+
+        void addMedia(std::string group_name, std::string media_name);
 
         void printMedia(std::string name, std::ostream& stream);
         void printGroup(std::string name, std::ostream& stream);
