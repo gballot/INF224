@@ -152,6 +152,7 @@ void DataBase::createRequest(stringstream& stream, string& response) {
         else
             createGroup();
         cout << "group created " << name << endl;
+        response = "done";
     } else {
         string path;
         stream >> path;
@@ -164,6 +165,7 @@ void DataBase::createRequest(stringstream& stream, string& response) {
             else
                 createPhoto();
             cout << "photo created " << name << endl;
+            response = "done";
         } else if(!group_or_media.compare("video")) {
             string length;
             stream >> length;
@@ -172,6 +174,7 @@ void DataBase::createRequest(stringstream& stream, string& response) {
             else
                 createVideo();
             cout << "video created " << name << endl;
+            response = "done";
         } else if(!group_or_media.compare("film")) {
             string length;
             stream >> length;
@@ -197,15 +200,17 @@ void DataBase::createRequest(stringstream& stream, string& response) {
                 } else {
                     cout << "(name path length)" << endl;
                     createFilm(name, path, stoi(length));
+                    response = "done";
                 }
             } else {
                 cout << "()" << endl;
                 createFilm();
+                response = "done";
             }
             cout << "film created " << name << endl;
         }
-    }
-    response = "done";
+    } else {
+        response = "fail";
 }
 
 void DataBase::getRequest(stringstream& stream, string& response) {
@@ -217,13 +222,25 @@ void DataBase::getRequest(stringstream& stream, string& response) {
         cout << "get group received " << name << endl;
         printGroup(name, responseStream);
         cout << responseStream.str();
+        response = responseStream.str();
     }
-    else {
+    else if(!group_or_media.compare("media")) {
         cout << "get media receeived " << name << endl;
         printMedia(name, responseStream);
         cout << responseStream.str();
+        response = responseStream.str();
+    } else if(!group_or_media.compare("allmedias")) {
+        cout << "get allmedias received" << endl;
+        printAllMedias(responseStream);
+        response = responseStream.str();
+    } else if(!group_or_media.compare("allgroups")) {
+        cout << "get allgroups received" << endl;
+        printAllGroups(responseStream);
+        response = responseStream.str();
+    } else {
+        response = "fail";
     }
-    response = responseStream.str();
+
 }
 
 

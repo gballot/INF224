@@ -10,7 +10,9 @@ On ferme la connection entre chaque requette.
 * create group [<name>]
 * get media <name>
 * get group <name>
-* open media <name>
+* get allmedias
+* get allgroups
+* open <name>
 * delete media <name>
 * delete group <name>
 * add <group_name> <media name>
@@ -29,6 +31,8 @@ réponse : "done"
 
 réponse :
 <name> <path> <media type> <info>
+
+Si il s'agit d'un get all la liste des noms de media/group est renvoyé séparée par des espaces.
 
 où <info> dépend du type de media :
 * photo : <info> = <latitude> <longitude>
