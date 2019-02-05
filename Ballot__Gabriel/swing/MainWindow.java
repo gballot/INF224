@@ -101,7 +101,7 @@ public class MainWindow extends JFrame{
 		setJMenuBar(menubar);
 		
         //TextPane
-        textpane.setPreferredSize(new Dimension(200, 200));
+        textpane.setPreferredSize(new Dimension(500, 800));
         textpane.setEditable(false);
 
 		//ToolBar layout
@@ -187,7 +187,7 @@ public class MainWindow extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			String request = null;
-			String man = null;
+			String man[];
 			//All Medias
 			if (arg0.getSource() == button1 || arg0.getSource() == allMediaItem || arg0.getSource() == button4) {
 				request = "get allmedias";
@@ -215,61 +215,61 @@ public class MainWindow extends JFrame{
 			//Create a photo
 			else if (arg0.getSource() == createPhotoItem) {
 				request = "create photo ";
-				man = "[<name> <path> <latitude> <longitude>]";
+				man = new String[]{"name", "paht", "latitude", "longitude"};
 				new RequestWindow(request,man,client,window);
 			}
 			//Create a video
 			else if (arg0.getSource() == createVideoItem) {
 				request = "create video ";
-				man = "[<name> <path> <length>]";
+				man = new String[]{"name", "paht", "length"};
 				new RequestWindow(request,man,client,window);
 			}
 			//Create a film
 			else if (arg0.getSource() == createFilmItem) {
 				request = "create film ";
-				man = "[<name> <path> <length> [<nb_chapters> <tab>]]";
+				man = new String[]{"name", "paht", "length (optionnal)", "nomber chapters", "length chapters (list of intergers separated with ' ')"};
 				new RequestWindow(request,man,client,window);
 			}
 			//Create a group
 			else if (arg0.getSource() == createGroupItem) {
 				request = "create group ";
-				man = "[<name>]";
+				man = new String[]{"name"};
 				new RequestWindow(request,man,client,window);
 			}
 			//Open a media
 			else if (arg0.getSource() == openMediaItem || arg0.getSource() == button6) {
 				request = "open ";
-				man = "<name>";
+				man = new String[]{"name"};
 				new RequestWindow(request,man,client,window);
 			}
 			//Search a media
 			else if (arg0.getSource() == searchMediaItem) {
 				request = "get media ";
-				man = "<name>";
+				man = new String[]{"name"};
 				new RequestWindow(request,man,client,window);
 			}
 			//Search a group
 			else if (arg0.getSource() == searchGroupItem) {
 				request = "get group ";
-				man = "<name>";
+				man = new String[]{"name"};
 				new RequestWindow(request,man,client,window);
 			}
 			//Delete a Media
 			else if (arg0.getSource() == deleteMediaItem) {
 				request = "delete media ";
-				man = "<name>";
+				man = new String[]{"name"};
 				new RequestWindow(request,man,client,window);
 			}
 			//Delete a Group
 			else if (arg0.getSource() == deleteGroupItem) {
 				request = "delete group ";
-				man = "<name>";
+				man = new String[]{"name"};
 				new RequestWindow(request,man,client,window);
 			}
 			//Add a media to a group
 			else if (arg0.getSource() == addMediaToGroupItem) {
 				request = "add ";
-				man = "<group_name> <media_name>";
+				man = new String[]{"group name", "media name"};
 				new RequestWindow(request,man,client,window);
 			}
 			
