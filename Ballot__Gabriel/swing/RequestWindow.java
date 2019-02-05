@@ -15,9 +15,8 @@ public class RequestWindow extends JFrame {
     n = man.length;
 	this.client = client;
 	this.window = window;
-    this.setTitle("Request to C++ server");
-    this.setSize(300, n*100);
-    this.setLocationRelativeTo(null);
+    this.setTitle("Request");
+    this.setLocationRelativeTo(window);
     container.setLayout(new BorderLayout());
     JPanel top = new JPanel();        
     top.setLayout(new GridLayout(n, 2, 5, 5));
@@ -29,7 +28,7 @@ public class RequestWindow extends JFrame {
         labels[i].setHorizontalAlignment(SwingConstants.RIGHT);
         jtfs[i] = new JTextField();
         jtfs[i].setFont(police);
-        jtfs[i].setPreferredSize(new Dimension(200, 10));
+        jtfs[i].setPreferredSize(new Dimension(100, 20));
         jtfs[i].setForeground(Color.BLUE);
         top.add(labels[i]);
         top.add(jtfs[i]);
@@ -38,6 +37,7 @@ public class RequestWindow extends JFrame {
     container.add(top,BorderLayout.CENTER);
     container.add(b, BorderLayout.SOUTH);
     this.setContentPane(container);
+    this.pack();
     this.setVisible(true);            
   }       
 
@@ -56,9 +56,12 @@ public class RequestWindow extends JFrame {
 	}
     public void actionPerformed(ActionEvent e) {
         String tmpText;
+        boolean create_film_request = (request.equals("create film "));
+        boolean get_group_request = (request.equals("get group "));
+        boolean get_media_request = (request.equals("get media "));
         for(int i = 0 ; i < n ; i++) {
             tmpText = jtfs[i].getText();
-            if(tmpText.equals("")) {
+            if(create_film_request && i==2 && tmpText.equals("")) {
                 tmpText = "null";
             }
             request = request + " " + tmpText;
@@ -66,10 +69,18 @@ public class RequestWindow extends JFrame {
     	this.rwindow.dispose();
     	String response = client.send(request);
     	window.displayRequest(request);
-	    if(response == "fail") {
+	    if(response.equals("fail")) {
 	    		window.displayError("Fail, please check that you have correctly entered the request");
 	    }
-	    else {
+        else if(response.equals("")) {
+            if(get_group_request)
+                window.displayInfo("Sorry there is no goup called "+jtfs[0].getText()+".");
+            else if(get_media_request) {
+                window.displayInfo("Sorry there is no media called "+jtfs[0].getText()+".");
+            } else {
+                window.displayResponse("");
+            }
+        } else {
             response = response;
 	    		window.displayResponse(response);
 	    }

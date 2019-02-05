@@ -1,6 +1,6 @@
 # Protocole de commmunication client serveur
 
-On ferme la connection entre chaque requette.
+On laisse la connection ouverte entre chaque requette.
 
 ### Requettes de client :
 * create photo [<name> <path> <latitude> <longitude>]
@@ -38,6 +38,7 @@ où <info> dépend du type de media :
 * photo : <info> = <latitude> <longitude>
 * video : <info> = <length>
 * film : <info> = <nb_chapters> <length chap 1> <length chap 2> etc...
+de plus un film est une video donc il y a "video <length>" avant "film".
 
 #### Pour les requettes de type get group
 
