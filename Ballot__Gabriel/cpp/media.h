@@ -10,7 +10,7 @@ class Media {
         std::string name;
         std::string path;
     public :
-        Media() {}
+        Media() : name("unknown_name"), path("unknown_path") {}
         Media(std::string name, std::string path) : name(name), path(path) {}
 
         virtual ~Media() {

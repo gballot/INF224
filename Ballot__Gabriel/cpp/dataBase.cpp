@@ -171,9 +171,14 @@ void DataBase::createRequest(stringstream& stream, string& response) {
             string latitude, longitude;
             stream >> latitude;
             stream >> longitude;
-            if(name.compare("") && path.compare("") && latitude.compare("") && longitude.compare(""))
-                createPhoto(name, path, stof(latitude), stof(longitude));
-            else
+            if(name.compare("") && path.compare("") && latitude.compare("") && longitude.compare("")) {
+                try {
+                    createPhoto(name, path, stof(latitude), stof(longitude));
+                } catch (const std::exception& e) {
+                    response = "fail";
+                    return;
+                }
+            } else
                 createPhoto();
             cout << "photo created " << name << endl;
             response = "done";
@@ -181,7 +186,12 @@ void DataBase::createRequest(stringstream& stream, string& response) {
             string length;
             stream >> length;
             if(name.compare("") && path.compare("") && length.compare(""))
-                createVideo(name, path, stoi(length));
+                try {
+                    createVideo(name, path, stoi(length));
+                } catch (const std::exception& e) {
+                    response = "fail";
+                    return;
+                }
             else
                 createVideo();
             cout << "video created " << name << endl;
@@ -195,24 +205,40 @@ void DataBase::createRequest(stringstream& stream, string& response) {
                 if(nb_chapters.compare("")) {
                     string last_int;
                     stream >> last_int;
-                    int nb_chap = stoi(nb_chapters);
-                    int tab[nb_chap];
-                    for(int i = 0 ; i < nb_chap ; i++) {
-                        tab[i] = stoi(last_int);
-                        stream >> last_int;
-                    }
-                    cout << "(h)" << endl;
-                    if(!length.compare("null"))
-                        createFilm(name, path, nb_chap, tab);
-                    else if(length.compare(""))
-                        createFilm(name, path, stoi(length), nb_chap, tab);
-                    else {
+                    try {
+                        int nb_chap = stoi(nb_chapters);
+                        int tab[nb_chap];
+                        for(int i = 0 ; i < nb_chap ; i++) {
+                            try {
+                                tab[i] = stoi(last_int);
+                            } catch (const std::exception& e) {
+                                response = "fail";
+                                return;
+                            }
+                            stream >> last_int;
+                        }
+                        cout << "(h)" << endl;
+                        if(!length.compare("null"))
+                            createFilm(name, path, nb_chap, tab);
+                        else if(length.compare("")) {
+                            createFilm(name, path, stoi(length), nb_chap, tab);
+                        }
+                        else {
+                            response = "fail";
+                            return;
+                        }
+                    } catch (const std::exception& e) {
                         response = "fail";
                         return;
                     }
                 } else {
                     cout << "(name path length)" << endl;
-                    createFilm(name, path, stoi(length));
+                    try {
+                        createFilm(name, path, stoi(length));
+                    } catch (const std::exception& e) {
+                        response = "fail";
+                        return;
+                    }
                     response = "done";
                 }
             } else {
