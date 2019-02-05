@@ -22,7 +22,7 @@ public class MainWindow extends JFrame{
 	//Components of the main window
 	private JButton button1 = new JButton(new AddTextListener("All Medias", this));
 	private JButton button2 = new JButton(new CloseListener("Quit"));
-	private JButton button3 = new JButton(new AddTextListener("Play a Media", this));
+	private JButton button3 = new JButton(new AddTextListener("All Groups", this));
 	private JButton button4 = new JButton(new AddTextListener("All Medias", this));
 	private JButton button5 = new JButton(new CloseListener("Quit"));
 	private JButton button6 = new JButton(new AddTextListener("Play a Media", this));
@@ -120,13 +120,18 @@ public class MainWindow extends JFrame{
 		setVisible(true);			
 	}
 	
-	public void display(String text) {
-		textarea.append(text+"\n");
+	public void displayRequest(String text) {
+		textarea.setForeground(Color.red);
+		textarea.append("* Request : " + text + "\n");
+	}
+
+	public void displayResponse(String text) {
+		textarea.append("------------> Response : " + text + "\n");
 	}
 	
 	public void displayError(String text) {
 		textarea.setForeground(Color.red);
-		textarea.append(text+"\n");
+		textarea.append(text + "\n");
 	}
 	
 	
@@ -161,25 +166,25 @@ public class MainWindow extends JFrame{
 			//All Medias
 			if (arg0.getSource() == button1 || arg0.getSource() == allMediaItem || arg0.getSource() == button4) {
 				request = "get allmedias";
-				window.display(request);
+				window.displayRequest(request);
 				String response = client.send(request);
 			    if(response == "fail") {
 			    		window.displayError("Fail");
 			    }
 			    else {
-			    		window.display(response);
+			    		window.displayResponse(response);
 			    }	
 			}
 			//All Groups
-			else if (arg0.getSource() == allGroupItem) {
+			else if (arg0.getSource() == allGroupItem || arg0.getSource() == button3) {
 				request = "get allgroups";
-				window.display(request);
+				window.displayRequest(request);
 				String response = client.send(request);
 			    if(response == "fail") {
 			    		window.displayError("Fail");
 			    }
 			    else {
-			    		window.display(response);
+			    		window.displayResponse(response);
 			    }
 			}
 			//Create a photo
@@ -207,7 +212,7 @@ public class MainWindow extends JFrame{
 				new RequestWindow(request,man,client,window);
 			}
 			//Open a media
-			else if (arg0.getSource() == openMediaItem || arg0.getSource() == button3 || arg0.getSource() == button6) {
+			else if (arg0.getSource() == openMediaItem || arg0.getSource() == button6) {
 				request = "open ";
 				man = "<name>";
 				new RequestWindow(request,man,client,window);

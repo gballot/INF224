@@ -54,14 +54,15 @@ public class RequestWindow extends JFrame {
 	}
     public void actionPerformed(ActionEvent e) {
     	request = request + jtf.getText();
-    	window.display(request);
     	this.rwindow.dispose();
     	String response = client.send(request);
+    	window.displayRequest(request);
 	    if(response == "fail") {
 	    		window.displayError("Fail, please check that you have correctly entered the request");
 	    }
 	    else {
-	    		window.display(response);
+            response = response;
+	    		window.displayResponse(response);
 	    }
     }
   }
