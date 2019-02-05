@@ -146,26 +146,31 @@ public class MainWindow extends JFrame{
 		setVisible(true);			
 	}
 	
+    // Displays text with request format
 	public void displayRequest(String text) {
         addColoredText(textpane, "Request : ", Color.GRAY);
         addColoredText(textpane, text + "\n", Color.BLACK);
 	}
 
+    // Displays text with response format
 	public void displayResponse(String text) {
         addColoredText(textpane, "Response : ", Color.GREEN);
         addColoredText(textpane, text + "\n", Color.BLACK);
 	}
 	
+    // Displays text with error format
 	public void displayError(String text) {
         addColoredText(textpane, "ERROR : ", Color.RED);
         addColoredText(textpane, text + "\n", Color.BLACK);
 	}
 
+    // Displays text with info format
 	public void displayInfo(String text) {
         addColoredText(textpane, "INFO : ", Color.CYAN);
         addColoredText(textpane, text + "\n", Color.BLACK);
 	}
 
+    // Utility to diplay formated text
     public void addColoredText(JTextPane pane, String text, Color color) {
                 StyledDocument doc = pane.getStyledDocument();
 

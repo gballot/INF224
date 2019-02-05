@@ -30,12 +30,17 @@ class Film : public Video {
 
         ~Film() { delete [] this->chapters; }
 
+        // sets the length
         void setLength(int length) override { if(length) return; }
+        //set the chapters table
         void setChapters(int nb_chap, int *tab);
+        // gets the chapters table
         int getChapters(int *tab, int size) const;
+        // get the number of chapters
         int getNbChapter() const {
             return nb_chapters;
         }
+        // print the video in a stream
         void print(std::ostream& stream) const override ;
 };
 

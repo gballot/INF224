@@ -19,13 +19,19 @@ class Media {
                 << std::endl;
         }
 
+        // sets the name of the media
         void setName(std::string name) { this->name = name; }
+        // gets the name of the media
         std::string getName() const { return name; }
 
+        // sets the path of the media
         void setPath(std::string path) { this-> path = path; }
+        // gets the path of the media
         std::string getPath() const { return path; }
 
+        // prints the media
         virtual void print(std::ostream& stream) const;
+        // plays the media
         virtual void open() const = 0;
 };
 

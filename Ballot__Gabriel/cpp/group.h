@@ -11,7 +11,9 @@ class Group : public std::list<MediaPtr> {
         Group() : list<MediaPtr>() {}
         Group(std::string name) : list<MediaPtr>(), name(name) {}
         
+        // gets the name of the group
         std::string getName() const { return this->name; }
+        // print one by one all the medias in the group in a stream
         void printAll(std::ostream& stream) const;
 };
 
