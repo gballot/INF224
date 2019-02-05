@@ -12,9 +12,13 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 import javax.swing.JToolBar;
 import javax.swing.UIManager;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 public class MainWindow extends JFrame{
 	//Class version
@@ -26,8 +30,8 @@ public class MainWindow extends JFrame{
 	private JButton button4 = new JButton(new AddTextListener("All Medias", this));
 	private JButton button5 = new JButton(new CloseListener("Quit"));
 	private JButton button6 = new JButton(new AddTextListener("Play a Media", this));
-	private JTextArea textarea = new JTextArea(20,30);
-	private JScrollPane scroll = new JScrollPane(textarea);
+	private JTextPane textpane = new JTextPane();
+	private JScrollPane scroll = new JScrollPane(textpane);
 	private JMenuBar menubar = new JMenuBar();
 	private JMenu mainMenu = new JMenu("Menu");
 	private JMenu createMenu = new JMenu("Create");
@@ -96,6 +100,10 @@ public class MainWindow extends JFrame{
 		menubar.add(deleteMenu);
 		setJMenuBar(menubar);
 		
+        //TextPane
+        textpane.setPreferredSize(new Dimension(200, 200));
+        textpane.setEditable(false);
+
 		//ToolBar layout
 		toolbar.add(button4);
 		toolbar.add(button5);
@@ -121,18 +129,35 @@ public class MainWindow extends JFrame{
 	}
 	
 	public void displayRequest(String text) {
-		textarea.setForeground(Color.red);
-		textarea.append("* Request : " + text + "\n");
+        addColoredText(textpane, "Request : ", Color.GRAY);
+        addColoredText(textpane, text + "\n", Color.BLACK);
 	}
 
 	public void displayResponse(String text) {
-		textarea.append("------------> Response : " + text + "\n");
+        addColoredText(textpane, "Response : ", Color.GREEN);
+        addColoredText(textpane, text + "\n", Color.BLACK);
 	}
 	
 	public void displayError(String text) {
-		textarea.setForeground(Color.red);
-		textarea.append(text + "\n");
+        addColoredText(textpane, "ERROR : ", Color.RED);
+        addColoredText(textpane, text + "\n", Color.BLACK);
 	}
+
+    public void addColoredText(JTextPane pane, String text, Color color) {
+                StyledDocument doc = pane.getStyledDocument();
+
+                        Style style = pane.addStyle("Color Style", null);
+                                StyleConstants.setForeground(style, color);
+                                try {
+                                                doc.insertString(doc.getLength(), text, style);
+                                                        
+                                } 
+                                catch (BadLocationException e) {
+                                                e.printStackTrace();
+                                                        
+                                }           
+                                    
+    }
 	
 	
 	//Quit Button Listener
